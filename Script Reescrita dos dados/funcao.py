@@ -12,6 +12,14 @@ def substituir_cedilha_por_c(texto):
     
     return texto_minusculo
 
+def rename_properties(data):
+    for item in data:
+        if 'Cidade' in item:
+            item['name'] = item.pop('Cidade')
+        if 'Consult2' in item:
+            item['value'] = item.pop('Consult2')
+    return data
+
 def main(arquivo2):
     with open(arquivo2, 'r', encoding='utf-8') as arquivo:
         dados = json.load(arquivo) #carrega todo conteudo do arquivo json na variável dados
@@ -19,7 +27,12 @@ def main(arquivo2):
     for feature in dados:
         feature['Cidade'] = substituir_cedilha_por_c(feature['Cidade']) #utiliza a função "substituir..." em todas as features cidade
 
+    rename_properties(dados)
+
     with open(arquivo2, 'w', encoding='utf-8') as arquivo:
         json.dump(dados, arquivo, indent=2) #reescreve o arquivo inicial
 
     print("Reescrita bem-sucedida!") #confirmação
+
+
+
