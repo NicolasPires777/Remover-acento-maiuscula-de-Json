@@ -25,12 +25,17 @@ def main(arquivo2):
         dados = json.load(arquivo) #carrega todo conteudo do arquivo json na variável dados
 
     for feature in dados:
-        feature['Cidade'] = substituir_cedilha_por_c(feature['Cidade']) #utiliza a função "substituir..." em todas as features cidade
+        feature['name'] = substituir_cedilha_por_c(feature['name']) #utiliza a função "substituir..." em todas as features cidade
 
     rename_properties(dados)
 
-    with open(arquivo2, 'w', encoding='utf-8') as arquivo:
-        json.dump(dados, arquivo, indent=2) #reescreve o arquivo inicial
+    with open(arquivo2, 'w', encoding='utf-8') as arquivo: #reescriya do arquivo
+        arquivo.write('[\n')
+        for index, item in enumerate(dados):
+            json.dump(item, arquivo),
+            if index < len(dados)-1:  # verifica se nao é o último item
+                arquivo.write(',\n')
+        arquivo.write('\n]')
 
     print("Reescrita bem-sucedida!") #confirmação
 
