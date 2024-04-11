@@ -21,7 +21,12 @@ def main(caminho_arquivo):
                 if isinstance(valor, str): #verifica se o valor da propriedade é uma string
                     properties[propriedade] = substituir_cedilha_por_c(valor) #executa a função no valor da propriedade
 
-    with open(caminho_arquivo, 'w', encoding='utf-8') as arquivo: #abre o arquivo para escrita
-        json.dump(dados, arquivo, indent=2) #reescreve o arquivo original
+    with open(caminho_arquivo, 'w', encoding='utf-8') as arquivo: # abre o arquivo para escrita
+        arquivo.write('[\n')
+        for index, feature in enumerate(dados['features']):
+            json.dump(feature, arquivo)
+            if index < len(dados['features']) - 1:  # verifica se não é o último item
+                arquivo.write(',\n')
+        arquivo.write('\n]')
 
     print("Reescrita bem-sucedida!")
